@@ -19,7 +19,7 @@ def tape_mask(image):
     B = image[:, :, 2]
     for row in range(image.shape[0]):
         for col in range(image.shape[1]):
-            if R[row][col] < 0.65 * G[row][col] and G[row][col] < 0.75 * B[row][col] and B[row][col] > 100:
+            if R[row][col] < 2 * G[row][col] and G[row][col] < 0.8 * B[row][col] and B[row][col] > 80 and B[row][col] < 255:
                 image_mask[row][col] = 1
     return image_mask
 
@@ -35,9 +35,14 @@ def cat_to_im(image):
 
 # Folder doesn't include the / for directory
 def create_masks(folder):
+    done_indices = [int(re.search(r'\d+', file).group()) for file in glob.glob("MaskImages/*")]
     for file in glob.glob(folder + "/*"):
         index = int(re.search(r'\d+', file).group())
 
+        if index in done_indices:
+            continue
+
+        print(len(done_indices))
         image = imageio.imread(file)
         display_image(image)
         mask = tape_mask(image)
@@ -50,3 +55,12 @@ def create_masks(folder):
 
         np.save("MaskImages/" + str(index), new_mask)
     # [<55% G, <75% B, 100+]
+
+
+if __name__ == "__main__":
+    create_masks("TapeImages")
+
+    # for file in glob.glob("TapeImages/image*"):
+    #     index = int(re.search(r'\d+', file).group())
+    #     image = imageio.imread(file)
+    #     imageio.imwrite("TapeImages/" + str(index) + ".jpg", image)

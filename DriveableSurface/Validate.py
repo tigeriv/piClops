@@ -11,10 +11,10 @@ from LabelImages import *
 import matplotlib.pyplot as plt
 
 
-load_path = "./tmp/model900.ckpt"
-save = False
-load = False
-lite = False
+load_path = "./tmp/model600.ckpt"
+save = True
+load = True
+lite = True
 
 
 def load_sess(path, model):

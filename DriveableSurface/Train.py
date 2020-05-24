@@ -15,8 +15,8 @@ restore = False
 save = True
 load_path = "./pretrained/model.ckpt"
 batch_size = 2
-test_size = 0.01
-LEARNING_RATE = 0.0005
+test_size = 0.1
+LEARNING_RATE = 0.00005
 
 
 # Debugging settings

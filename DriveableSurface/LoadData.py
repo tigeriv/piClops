@@ -33,7 +33,7 @@ def extract_file_name(file):
 
 def data_extension(file_name, train=True):
     if train:
-        return './TapeImages/image' + str(file_name) + '.jpg'
+        return './TapeImages/' + str(file_name) + '.jpg'
     else:
         return './MaskImages/' + str(file_name) + '.npy'
 
