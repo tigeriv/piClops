@@ -133,12 +133,11 @@ if __name__ == "__main__":
     model = FSCNN(width=240, height=240, training=False)
     data = TapeRoad()
 
-    printTensors("frozen/frozen_model.pb")
-
     if save:
         save_graph(model)
         freeze_graph("frozen", "Softmax")
 
+    printTensors("frozen/frozen_model.pb")
     if load:
         graph = load_graph("frozen/frozen_model.pb")
         # We can verify that we can access the list of operations in the graph
@@ -156,7 +155,7 @@ if __name__ == "__main__":
         with tf.Session(graph=graph) as sess:
             # Note: we don't nee to initialize/restore anything
             # There is no Variables in this graph, only hardcoded constants
-            while True:
+            for i in range(2):
                 val_x, val_y = data.get_val_data(batch_size=1)
                 y_out = sess.run(y, feed_dict={
                     x: val_x  # < 45
@@ -169,7 +168,7 @@ if __name__ == "__main__":
         to_lite()
 
     sess = load_sess(load_path, model)
-    while True:
+    for i in range(2):
         val_x, val_y = data.get_val_data(batch_size=1)
         val_labels = predict(sess, model, val_x)
         for index in range(len(val_labels)):

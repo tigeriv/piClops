@@ -9,7 +9,7 @@ tf.disable_v2_behavior()
 
 
 # Training settings
-NUM_EPOCHS = 1000
+NUM_EPOCHS = 300
 save_freq = 100
 restore = False
 save = True
